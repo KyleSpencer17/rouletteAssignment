@@ -36,7 +36,6 @@ public class RouletteServices {
 					playerList.add(player);
 				}
 				br.close();
-				System.out.println(myObj.length());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -147,7 +146,6 @@ public class RouletteServices {
 
 			Scanner scanner = new Scanner(myObj);
 			while (scanner.hasNext()) {
-				System.out.println("Reading");
 				String data = scanner.nextLine();
 				myArr = data.split(",");
 				if (myArr.length < 2) {

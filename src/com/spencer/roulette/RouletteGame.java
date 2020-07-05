@@ -34,18 +34,18 @@ public class RouletteGame {
 			}
 			scan.close();
 			RouletteResult myresult = rouletteService.getResults(playerList);
-			System.out.println("\n----------------------------------------------------");
+			System.out.println("\n---------------------Results-------------------------");
 			System.out.println("Number: " + myresult.getRouletteNumber());
-			System.out.println("Player:       Bet        Outcome      Winnings");
+			System.out.println("Player:       Choice        Outcome      Winnings");
 			System.out.println("-------");
 			for( Map.Entry<Player, PlayerResult> entry : myresult.getResults().entrySet() ){
-			    System.out.println(entry.getKey().getName() + "       " + entry.getKey().getBet() +  "       " +  entry.getValue().getResult() +  "       " + entry.getValue().getWinnings());
+			    System.out.println(entry.getKey().getName() + "       " + entry.getKey().getChoice() +  "       " +  entry.getValue().getResult() +  "       " + entry.getValue().getWinnings());
 			}
 			System.out.println("\n----------------------------------------------------");
 			
 			try {
 				List<PlayerHistory> myList =  rouletteService.getFinalResultsAndHistory(myresult);
-				System.out.println("\n\n----------------------------------------------------");
+				System.out.println("\n\n------------------Player History-------------------------");
 				System.out.println("Player:       Total Bet       Total Winnings");
 				System.out.println("-------");
 				for(PlayerHistory item: myList) {
