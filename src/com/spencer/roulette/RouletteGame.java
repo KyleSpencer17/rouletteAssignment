@@ -1,5 +1,6 @@
 package com.spencer.roulette;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Vector;
@@ -17,6 +18,9 @@ public class RouletteGame {
 			long startTime = System.currentTimeMillis();
 			while(System.currentTimeMillis() - startTime < 30000) {
 				for (Player player : playerList) {
+					if(System.currentTimeMillis() - startTime > 30000) {
+						break;
+					}
 					System.out.println(player.getName() + " Would you like to add to your bet? If not type 0.00");
 					if (scan.hasNext()) {
 						String bet = scan.nextLine();
@@ -27,15 +31,9 @@ public class RouletteGame {
 						player.setBet(player.getBet() + Double.parseDouble(bet));
 					}
 				}
-				scan.close();
 			}
+			scan.close();
 			RouletteResult myresult = rouletteService.getResults(playerList);
-			try {
-				rouletteService.getPlayerHistoryFromfile(myresult);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			System.out.println("\n----------------------------------------------------");
 			System.out.println("Number: " + myresult.getRouletteNumber());
 			System.out.println("Player:       Bet        Outcome      Winnings");
@@ -44,6 +42,22 @@ public class RouletteGame {
 			    System.out.println(entry.getKey().getName() + "       " + entry.getKey().getBet() +  "       " +  entry.getValue().getResult() +  "       " + entry.getValue().getWinnings());
 			}
 			System.out.println("\n----------------------------------------------------");
+			
+			try {
+				List<PlayerHistory> myList =  rouletteService.getFinalResultsAndHistory(myresult);
+				System.out.println("\n\n----------------------------------------------------");
+				System.out.println("Player:       Total Bet       Total Winnings");
+				System.out.println("-------");
+				for(PlayerHistory item: myList) {
+					System.out.println(item.getName() + "     " +  item.getBet() + "      "  + item.getWinnings());
+				}
+				System.out.println("----------------------------------------------------");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
 			System.exit(0);
 		}
 	
