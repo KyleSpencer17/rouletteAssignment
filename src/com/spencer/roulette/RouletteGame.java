@@ -5,27 +5,26 @@ import java.util.Scanner;
 import java.util.Vector;
 import com.spencer.pojos.*;
 import com.spencer.services.RouletteServices;
-import com.spencer.threads.PlayerInputThread;
-import com.spencer.threads.RouletteTimerThread;
+
 
 public class RouletteGame {
-	PlayerInputThread inputThread;
+	private RouletteServices rouletteService;
 	public void playGame()  {
+			rouletteService = new RouletteServices();
 			Scanner scan = rouletteService.getScanner();
-			RouletteServices rouletteService = new RouletteServices();
 			Vector<Player> playerList = rouletteService.createPlayers();
+			rouletteService.getChoiceAndBet(playerList);
 			long startTime = System.currentTimeMillis();
 			while(System.currentTimeMillis() - startTime < 30000) {
 				for (Player player : playerList) {
 					System.out.println(player.getName() + " Would you like to add to your bet? If not type 0.00");
-					if (sc.hasNext()) {
+					if (scan.hasNext()) {
 						String bet = scan.nextLine();
-						while (!isValidBet(bet)) {
+						while (!rouletteService.isValidAddition(bet)) {
 							System.out.println(player.getName() + " Would you like to add to your bet? If not type 0.00");
 							bet = scan.nextLine();
 						}
 						player.setBet(player.getBet() + Double.parseDouble(bet));
-						scan.close();
 					}
 				}
 				scan.close();
