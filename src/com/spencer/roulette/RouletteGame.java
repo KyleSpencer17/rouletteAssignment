@@ -44,6 +44,7 @@ public class RouletteGame {
 			System.out.println("\n----------------------------------------------------");
 			
 			try {
+				Thread.sleep(2000);
 				List<PlayerHistory> myList =  rouletteService.getFinalResultsAndHistory(myresult);
 				System.out.println("\n\n------------------Player History-------------------------");
 				System.out.println("Player:       Total Bet       Total Winnings");
